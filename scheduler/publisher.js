@@ -4,7 +4,7 @@ import PublicationLog from "../models/publicationLog.js";
 
 export const startPublisher = () => {
   // run every minute
-  cron.schedule("* * * * * *", async () => {
+  cron.schedule("* * * * *", async () => {
     try {
       const now = new Date();
       // find scheduled posts whose scheduledAt <= now, ordered by scheduledAt then createdAt
