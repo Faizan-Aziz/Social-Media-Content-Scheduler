@@ -5,7 +5,7 @@ import databaseconnection from "./Database/conn.js";
 import UserRoutes from './routes/user.js';
 import postRoutes from "./routes/post.js";
 import cors from "cors"; 
-import { startPublisher } from "./scheduler/publisher.js";
+
 
 const app = express();
 const port = 5000;
@@ -23,7 +23,6 @@ dotenv.config();         // ✅ Load environment variables BEFORE using them
 databaseconnection       //database used we used
 
 
-startPublisher();
 
 app.use('/api/auth', UserRoutes);
 app.use("/api/posts", postRoutes);
