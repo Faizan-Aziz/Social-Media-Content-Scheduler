@@ -240,9 +240,4 @@ For issues or support, please open an issue in this repository describing:
 Maintainers
 - Faizan Aziz — https://github.com/Faizan-Aziz
 
-If you want, I can also:
-- Add API examples with full request/response bodies and sample tokens
-- Create Postman / OpenAPI (Swagger) documentation
-- Add CI configuration and GitHub Actions workflows
-
 ```
