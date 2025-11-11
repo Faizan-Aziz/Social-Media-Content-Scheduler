@@ -11,9 +11,12 @@ const app = express();
 const port = 5000;
 
 app.use(cors({
-  origin: "http://localhost:5173", // Your React frontend
-  credentials: true, // Allow cookies to be sent
-  methods: ['GET', 'POST', 'PUT', 'DELETE'] // Allowed methods
+  origin: [
+    "http://localhost:5173", 
+    "https://socail-media-content-schedular.vercel.app"
+  ],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE']
 }));
 
 app.use(express.json());   //  to automatically convert the JSON data string which is recived from frontend covert into a convenient JavaScript object that your server can use so that we can acsee request.body  other wise it is indefined
