@@ -151,6 +151,7 @@ Notes
 
 A typical layout for this backend:
 
+```
 backend/
 ├── controllers/        # Route controllers (business logic)
 ├── models/             # Mongoose models
@@ -161,6 +162,8 @@ backend/
 ├── tests/              # Unit/integration tests
 ├── package.json
 └── server.js           # Application entry point
+
+```
 
 ## Data models (summary)
 
