@@ -1,6 +1,6 @@
 import Post from "../models/post.js";
 
-// 🟢 Create a new post
+//  Create a new post
 export const createPost = async (req, res) => {
   try {
     const { content, platforms, scheduledAt, imageUrl } = req.body;
@@ -9,11 +9,16 @@ export const createPost = async (req, res) => {
       return res.status(400).json({ message: "Please fill all required fields." });
     }
 
+    // Convert local datetime (from browser) to correct UTC before saving
+    const localDate = new Date(scheduledAt);
+    const scheduledDate = new Date(scheduledAt);
+
+
     const newPost = new Post({
       user: req.userID,
       content,
       platforms,
-      scheduledAt,
+      scheduledAt: scheduledDate,
       imageUrl,
     });
 
@@ -26,12 +31,12 @@ export const createPost = async (req, res) => {
   }
 };
 
-// 🟢 Get all posts with pagination - SHOW NEAREST SCHEDULED FIRST
+//  Get all posts with pagination - SHOW NEAREST SCHEDULED FIRST
 export const getAllPosts = async (req, res) => {
   try {
     const { page = 1, limit = 10, status } = req.query;
 
-    // ✅ BUILD QUERY WITH OPTIONAL STATUS FILTER
+    //  BUILD QUERY WITH OPTIONAL STATUS FILTER
     let query = { user: req.userID };
     if (status && status !== "all") {
       query.status = status;
@@ -84,20 +89,22 @@ export const updatePost = async (req, res) => {
   try {
     const { content, platforms, scheduledAt, imageUrl, status } = req.body;
     const post = await Post.findById(req.params.id);
-    if (!post) return res.status(404).json({ message: "Post not found" });
-    if (post.user.toString() !== req.userID) return res.status(403).json({ message: "Forbidden" });
-    if (post.status === "published") return res.status(400).json({ message: "Cannot edit published post" });
 
-    // Validate future date
+    if (!post) return res.status(404).json({ message: "Post not found" });
+    if (post.user.toString() !== req.userID)
+      return res.status(403).json({ message: "Forbidden" });
+    if (post.status === "published")
+      return res.status(400).json({ message: "Cannot edit published post" });
+
     if (scheduledAt && new Date(scheduledAt) <= new Date()) {
       return res.status(400).json({ message: "scheduledAt must be a future date" });
     }
 
     post.content = content ?? post.content;
     post.platforms = platforms ?? post.platforms;
-    post.scheduledAt = scheduledAt ?? post.scheduledAt;
+    if (scheduledAt) post.scheduledAt = new Date(scheduledAt);
     post.imageUrl = imageUrl ?? post.imageUrl;
-    if (status) post.status = status; // optional: only allow certain transitions if needed
+    if (status) post.status = status;
 
     await post.save();
     res.json({ message: "Post updated", post });
