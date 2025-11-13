@@ -1,6 +1,6 @@
 import Post from "../models/post.js";
 
-//  Create a new post
+// 🟢 Create a new post
 export const createPost = async (req, res) => {
   try {
     const { content, platforms, scheduledAt, imageUrl } = req.body;
@@ -9,16 +9,12 @@ export const createPost = async (req, res) => {
       return res.status(400).json({ message: "Please fill all required fields." });
     }
 
-    // Convert local datetime (from browser) to correct UTC before saving
-    const localDate = new Date(scheduledAt);
-    const scheduledDate = new Date(scheduledAt);
-
-
+    // scheduledAt is already in UTC from frontend
     const newPost = new Post({
       user: req.userID,
       content,
       platforms,
-      scheduledAt: scheduledDate,
+      scheduledAt: new Date(scheduledAt),
       imageUrl,
     });
 
@@ -31,12 +27,12 @@ export const createPost = async (req, res) => {
   }
 };
 
-//  Get all posts with pagination - SHOW NEAREST SCHEDULED FIRST
+// 🟢 Get all posts with pagination - SHOW NEAREST SCHEDULED FIRST
 export const getAllPosts = async (req, res) => {
   try {
     const { page = 1, limit = 10, status } = req.query;
 
-    //  BUILD QUERY WITH OPTIONAL STATUS FILTER
+    // ✅ BUILD QUERY WITH OPTIONAL STATUS FILTER
     let query = { user: req.userID };
     if (status && status !== "all") {
       query.status = status;
