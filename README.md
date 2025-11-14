@@ -88,8 +88,8 @@ All protected endpoints require the Authorization header:
 Authorization: Bearer <jwt-token>
 
 Authentication
-- Register a new user
-  - Endpoint: POST /api/auth/register
+- Register a new user and login dont need the auth 
+  - Endpoint: POST /api/register
   - Body:
     ```json
     {
@@ -101,7 +101,7 @@ Authentication
   - Response: 201 Created (returns user info and token)
 
 - Login
-  - Endpoint: POST /api/auth/login
+  - Endpoint: POST /api/login
   - Body:
     ```json
     {
@@ -110,6 +110,7 @@ Authentication
     }
     ```
   - Response: 200 OK (returns JWT token and user info)
+  - Note: This endpoint does NOT require authentication. It generates the JWT token that will be used for authentication on protected routes.
 
 Content / Posts
 - Get all posts for the authenticated user
@@ -158,8 +159,6 @@ backend/
 ├── routes/             # Express route definitions
 ├── middleware/         # Auth, validation, error handling
 ├── config/             # DB and app configuration
-├── jobs/               # Background jobs or schedulers (optional)
-├── tests/              # Unit/integration tests
 ├── package.json
 └── server.js           # Application entry point
 
@@ -204,8 +203,7 @@ npm test       # Run test suite
 - Hash passwords (bcrypt or Argon2 recommended) before storing.
 - Use HTTPS in production and set secure cookie flags where applicable.
 - Consider rate limiting and request validation to protect against abuse.
-- Sanitize/validate inputs to prevent injection vulnerabilities.
-- Use a secrets manager (e.g., AWS Secrets Manager, HashiCorp Vault) for production credentials.
+
 
 ## Deployment
 
