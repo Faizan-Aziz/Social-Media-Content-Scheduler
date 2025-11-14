@@ -68,7 +68,6 @@ Create a `.env` in the project root and set at minimum:
 PORT=5000
 MONGODB_URI=mongodb://localhost:27017/social-media-scheduler
 JWT_SECRET=your-super-secret-jwt-key
-NODE_ENV=development
 ```
 
 Recommended production variables:
