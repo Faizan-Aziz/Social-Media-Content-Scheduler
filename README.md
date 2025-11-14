@@ -146,7 +146,7 @@ Content / Posts
 
 Notes
 - scheduleTime must be an ISO 8601 datetime string (UTC recommended).
-- The backend is responsible for storing scheduled posts; an external worker or scheduled job (cron) should handle actual publishing to social platforms (if integrated).
+- The backend is responsible for storing scheduled posts; an external worker or scheduled job (cron) should handle actual publishing to social platforms.
 
 ## Project structure
 
